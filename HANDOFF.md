@@ -1,3 +1,12 @@
+## Frozen (2026-10-11)
+
+I stopped Touchmark here; the reasons are in `docs/FROZEN.md`. Round 3 below is the place to restart. At the
+freeze I removed the merged `round2-wip` worktree and branch and moved the scratch copies (`~/touchmark-eval-r2`,
+`~/touchmark-work`) to the Trash, since everything scored is in `eval/`. Still open: the `/work` link is owned by
+root (`sudo rm /work`), the old `/usr/local/bin/tmk`, the local branch `backup/gap-fill-f8e4353` (an earlier
+draft of two research notes that main has in a later version), and Dependabot alert #2 (pyo3 0.18, low
+severity, only in `legacy/`, which the workspace does not build).
+
 ## Agent evaluation round 2 (stopped after the Rust calibration, 2026-10-10)
 
 See `eval/round2/RESULTS.md`. My pre-registered stop rule fired: 0 of the 11 Rust calibration runs on the 11

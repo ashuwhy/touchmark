@@ -3,6 +3,11 @@
 **A fast, memory-safe language where code carries its own proof of intent.** Built for the era
 in which AI writes most code and humans approve it.
 
+> **Frozen on 2026-10-11.** Two pre-registered rounds could not show that agents ship fewer bugs in
+> Touchmark than in Rust: Rust agents shipped none (0 of 36, then 0 of 11 on LeetCode Hard), because
+> every agent tested its code against a brute force it wrote itself. Why I stopped, what is worth keeping
+> and how to resume: [`docs/FROZEN.md`](docs/FROZEN.md). The code builds and the tests pass as of this commit.
+
 You state what a function must do. The compiler proves the code does it, using the Z3 solver,
 before it compiles to native code. Every check it proves is deleted from the binary, so proved
 code runs without safety overhead. What it cannot prove it rejects with a concrete
@@ -184,7 +189,7 @@ cargo build --release
 cargo test                                            # end-to-end tests
 ```
 
-## Status: v0.2 in progress
+## Status: v0.2, frozen
 
 Working: `int` and `i128` with proved overflow safety, booleans, records, enums, `Option`, `Result`,
 refinement types, arrays with proved bounds (reference-counted, copy-on-write, moved on last
