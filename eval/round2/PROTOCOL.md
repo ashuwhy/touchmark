@@ -272,3 +272,7 @@ Whatever the result, it goes into `eval/round2/RESULTS.md` and the README in the
   decision: planted bugs in the Rust golds, to show the hidden tests can fail a solution, and the
   calibration solutions run on fresh random inputs against the brute forces and references
   (`posthoc/`).
+- **2026-10-10, the audit above has a gap**, found by a review after publishing: `usage.py`
+  compares absolute paths by string prefix without normalizing `..`, and does not see a relative
+  climb out of the run's directory unless it names a marker. A stricter audit
+  (`posthoc/audit.py`), run on all 13 transcripts, flags nothing.

@@ -29,7 +29,7 @@ Touchmark cuts escaped defects, is still unanswered.
 | **Mean** (wall: median) | **223/223** | **10,308** | **72,687** | **412,455** | **4.9** | **3.1** | **73** | **617** |
 
 **0 of 11 defective.** Every run passed every hidden test, answered DONE with a solution that builds, and stayed inside
-its directory (the audit flagged no path). The slowest hidden test took 0.027 s against the 1.0 s limit. With 0 or 1
+its directory (the pre-registered audit flagged no path, and neither did the stricter one below). The slowest hidden test took 0.027 s against the 1.0 s limit. With 0 or 1
 defective runs the protocol stops the round: even 3 Rust defects against 0 over 33 runs an arm would give Fisher
 p = 0.24, so 55 more agents would have compared a ceiling with a ceiling.
 
@@ -71,8 +71,8 @@ compiler and test runs at 930 to 2,940 tokens a run.
 
 ## Checks I added after the stop (exploratory, not pre-registered)
 
-Neither check is part of any decision. They answer two doubts about a 0 of 11 result: that the hidden tests could not
-fail anything, and that the passes were luck.
+None of these checks is part of any decision. The first two answer two doubts about a 0 of 11 result: that the
+hidden tests could not fail anything, and that the passes were luck. The third answers a gap in the audit.
 
 **Planted bugs.** I put one typical bug into each Rust gold and scored it with the frozen harness
 (`posthoc/mutants.py`, output in `posthoc/mutants.log`):
@@ -103,6 +103,17 @@ each solution on 2,000 small inputs against the brute force and 300 medium input
 Python reference, through one Rust driver for all tasks. With two seeds, every calibration solution passed all 4,600;
 the golds, run first to check the tester, passed all 2,300 (`posthoc/difftest.log`).
 
+**A stricter access audit.** A review after publishing found a gap in the pre-registered audit (`usage.py`). It
+compares absolute paths by string prefix without normalizing them, so `/work/<run>/../<other run>/solution.rs`, a
+sibling directory whose name starts with the run's, or a `cd ..` followed by a relative path would all pass
+unflagged. `usage.py` is fixed by its hash, so I wrote `posthoc/audit.py`. It normalizes paths, flags any climb
+above the run's directory, home references and permission changes, and also scans tool results for another run's
+ID or a private file name. I also gave it a made-up transcript with all three escapes; it caught each and did not
+flag a plain `../solution.rs`. All 13 round 2 transcripts come back clean (`posthoc/audit.log`):
+every `..` the agents wrote climbs from their own test folder to their own solution. During the runs the private
+directory and `eval/` were also mode 000, so the audit was the second guard, not the only one. Round 3's audit
+gets this fix before it is pre-registered.
+
 ## Pilot (`max_valid_pair_sum`, Medium; not counted)
 
 | Run | Tests | T_work | T_ctx | T_proc | Tool calls | Compiler runs | Wall s | Solution tokens |
@@ -129,7 +140,7 @@ All four are in the protocol's change log with dates.
 - `report.py` had no path for a round without Touchmark runs, and the wall times, solution sizes and token breakdown
   lived only in the transcripts. I added a calibration report and `annotate.py`, which copies those fields into
   `results.json`. The scored fields are unchanged.
-- The two checks above.
+- The three checks above.
 
 ## Honest reading
 

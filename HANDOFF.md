@@ -13,7 +13,9 @@ The working copy of the private files is still at `~/touchmark-eval-r2` and the 
 
 Next: round 3, pre-registered before any run. My proposal is a no-execution condition: the same 11 tasks, tests and
 scorer, but the agent may only compile (`rustc`, `tmk check`, `tmk build`), never run a binary or script, and the
-transcript audit checks it. Rust calibration first, with the same stop rule. That is where "the proof replaces the
+transcript audit checks it. Rust calibration first, with the same stop rule. Before pre-registering, fold
+`eval/round2/posthoc/audit.py` into `usage.py`: the round 2 audit compares paths by unnormalized prefix, so `..`
+and relative climbs slip past it (no round 2 run did either). That is where "the proof replaces the
 tests" should pay off. The fallbacks, if Rust still sits at ceiling: a weaker model arm, or tasks without a cheap
 oracle. The token rule (T_work over 2x Rust) is judged at round 3 and is unmeasured on hard tasks; the one-task
 pilot gave 1.9x.

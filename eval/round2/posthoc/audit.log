@@ -1,0 +1,13 @@
+p2-max_valid_pair_sum-rs clean
+p2-max_valid_pair_sum-tmk clean
+r2t1-palindromic_subarray_sum-rs clean
+r2t1-widest_fence-rs clean
+r2t1-min_max_waiting_time-rs clean
+r2t1-count_ratio_subarrays-rs clean
+r2t1-elevator_penalty-rs clean
+r2t1-max_valid_splits-rs clean
+r2t1-min_ops_subset_sum-rs clean
+r2t1-distant_subarrays-rs clean
+r2t1-shadow_pairs-rs clean
+r2t1-largest_power-rs clean
+r2t1-longest_negation_subarray-rs clean
