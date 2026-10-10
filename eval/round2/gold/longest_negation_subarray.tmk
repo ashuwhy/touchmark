@@ -1,0 +1,58 @@
+// With prefix residues res, the subarray (l, r] works unchanged when res[l] == res[r], and by
+// negating nums[m] (l <= m < r) when res[r] == res[l] + 2 * nums[m] (mod k). For a pair of residues
+// the widest choice is the first l and the last r, so every pair is tried, the starts from right
+// to left with nxt[d] the first m from the current start on with 2 * nums[m] == d (mod k).
+pub fn longest_negation_subarray(nums: [int], k: int) -> int
+  requires 1 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: -100_000 <= nums[i] && nums[i] <= 100_000
+  requires 1 <= k && k <= 3_000
+{
+  let n = nums.len
+  var res = [0; n + 1]
+  for t in 0..n
+    invariant res.len == n + 1
+    invariant forall s in 0..n + 1: 0 <= res[s] && res[s] < k
+  {
+    res[t + 1] = ((res[t] + nums[t]) % k + k) % k
+  }
+  var first = [-1; k]
+  var last = [-1; k]
+  for t in 0..n + 1
+    invariant first.len == k && last.len == k
+    invariant forall v in 0..k: -1 <= first[v] && first[v] <= n && -1 <= last[v] && last[v] <= n
+  {
+    if first[res[t]] < 0 { first[res[t]] = t }
+    last[res[t]] = t
+  }
+  var best = 0
+  for v in 0..k
+    invariant 0 <= best && best <= n + 1
+  {
+    if first[v] >= 0 && last[v] - first[v] > best { best = last[v] - first[v] }
+  }
+  var nxt = [n; k]
+  var pos = n
+  var f = n + 1
+  while f > 0
+    invariant 0 <= f && f <= n + 1 && 0 <= pos && pos <= n && nxt.len == k
+    invariant 0 <= best && best <= n + 1
+  {
+    f -= 1
+    let v = res[f]
+    if first[v] == f {
+      while pos > f
+        invariant 0 <= pos && pos <= n && nxt.len == k
+      {
+        pos -= 1
+        nxt[((2 * nums[pos]) % k + k) % k] = pos
+      }
+      for d in 0..k
+        invariant 0 <= best && best <= n + 1
+      {
+        let w = (v + d) % k
+        if last[w] >= 0 && nxt[d] < last[w] && last[w] - f > best { best = last[w] - f }
+      }
+    }
+  }
+  best
+}

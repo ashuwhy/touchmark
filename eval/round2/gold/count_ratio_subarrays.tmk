@@ -1,0 +1,75 @@
+// x / y <= a / b with y > 0 is x * b - y * a <= 0; an even element adds b, an odd one -a,
+// so count the pairs of prefix sums i < j with p[i] >= p[j], by merge sort
+pub fn count_ratio_subarrays(nums: [int], a: int, b: int) -> int
+  requires 1 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: 1 <= nums[i] && nums[i] <= 1_000_000_000
+  requires 1 <= a && a <= 1_000_000_000 && 1 <= b && b <= 1_000_000_000
+{
+  var p = [0]
+  for i in 0..nums.len
+    invariant p.len == i + 1
+    invariant forall t in 0..p.len: -1_000_000_000 * t <= p[t] && p[t] <= 1_000_000_000 * t
+  {
+    if nums[i] % 2 == 0 { p.push(p[i] + b) } else { p.push(p[i] - a) }
+  }
+  let n = p.len
+  var src = p
+  var dst = p
+  var count = 0
+  var width = 1
+  // 2^17 > 100_001, so 17 levels sort any input; the level count bounds `count`
+  for lev in 0..17
+    invariant 1 <= width && width <= 200_002
+    invariant src.len == n && dst.len == n
+    invariant forall t in 0..n: -100_000_000_000_000 <= src[t] && src[t] <= 100_000_000_000_000
+    invariant forall t in 0..n: -100_000_000_000_000 <= dst[t] && dst[t] <= 100_000_000_000_000
+    invariant 0 <= count && count <= 10_000_200_001 * lev
+  {
+    if width < n {
+      var lo = 0
+      while lo < n
+        invariant 0 <= lo && lo <= n && dst.len == n
+        invariant forall t in 0..n: -100_000_000_000_000 <= dst[t] && dst[t] <= 100_000_000_000_000
+        invariant 0 <= count && count <= 10_000_200_001 * lev + 100_001 * lo
+      {
+        var mid = lo + width
+        if mid > n { mid = n }
+        var hi = lo + 2 * width
+        if hi > n { hi = n }
+        // both halves ascending: for each right element, the left elements >= it
+        var i = lo
+        for j in mid..hi
+          invariant lo <= i && i <= mid
+          invariant 0 <= count && count <= 10_000_200_001 * lev + 100_001 * j
+        {
+          while i < mid && src[i] < src[j]
+            invariant lo <= i && i <= mid
+          {
+            i += 1
+          }
+          count += mid - i
+        }
+        var x = lo
+        var y = mid
+        for k in lo..hi
+          invariant x + y == k + mid && lo <= x && x <= mid && mid <= y && y <= hi
+          invariant forall t in 0..n: -100_000_000_000_000 <= dst[t] && dst[t] <= 100_000_000_000_000
+        {
+          if y >= hi || (x < mid && src[x] <= src[y]) {
+            dst[k] = src[x]
+            x += 1
+          } else {
+            dst[k] = src[y]
+            y += 1
+          }
+        }
+        lo = hi
+      }
+      let t = src
+      src = dst
+      dst = t
+      width = width * 2
+    }
+  }
+  count
+}

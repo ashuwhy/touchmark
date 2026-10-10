@@ -1,0 +1,119 @@
+// bottom-up merge sort; only the element range is stated, the order is not needed for safety
+fn sort_asc(a: [int], least: int, most: int) -> [int]
+  requires a.len <= 1_000_000
+  requires forall i in 0..a.len: least <= a[i] && a[i] <= most
+  ensures result.len == a.len
+  ensures forall i in 0..result.len: least <= result[i] && result[i] <= most
+{
+  let n = a.len
+  var src = a
+  var dst = a
+  var width = 1
+  while width < n
+    invariant 1 <= width && width <= 2_000_000
+    invariant src.len == n && dst.len == n
+    invariant forall t in 0..n: least <= src[t] && src[t] <= most
+    invariant forall t in 0..n: least <= dst[t] && dst[t] <= most
+  {
+    var lo = 0
+    while lo < n
+      invariant 0 <= lo && lo <= n && dst.len == n
+      invariant forall t in 0..n: least <= dst[t] && dst[t] <= most
+    {
+      var mid = lo + width
+      if mid > n { mid = n }
+      var hi = lo + 2 * width
+      if hi > n { hi = n }
+      var x = lo
+      var y = mid
+      for k in lo..hi
+        invariant x + y == k + mid && lo <= x && x <= mid && mid <= y && y <= hi
+        invariant forall t in 0..n: least <= dst[t] && dst[t] <= most
+      {
+        if y >= hi || (x < mid && src[x] <= src[y]) {
+          dst[k] = src[x]
+          x += 1
+        } else {
+          dst[k] = src[y]
+          y += 1
+        }
+      }
+      lo = hi
+    }
+    let t = src
+    src = dst
+    dst = t
+    width = width * 2
+  }
+  src
+}
+
+pub fn widest_fence(planks: [int]) -> int
+  requires 1 <= planks.len && planks.len <= 1_000
+  requires forall i in 0..planks.len: 1 <= planks[i] && planks[i] <= 1_000_000_000
+{
+  let s = sort_asc(planks, 1, 1_000_000_000)
+  var vals: [int] = []
+  var cnt: [int] = []
+  for i in 0..s.len
+    invariant vals.len == cnt.len && vals.len <= i
+    invariant forall t in 0..cnt.len: 1 <= cnt[t] && cnt[t] <= i
+    invariant forall t in 0..vals.len: 1 <= vals[t] && vals[t] <= 1_000_000_000
+  {
+    if vals.len > 0 && vals[vals.len - 1] == s[i] {
+      cnt[cnt.len - 1] = cnt[cnt.len - 1] + 1
+    } else {
+      vals.push(s[i])
+      cnt.push(1)
+    }
+  }
+  let d = vals.len
+  // a height and the number of two-plank pieces of that height, packed as height * 1024 + pieces
+  var packed: [int] = []
+  for i in 0..d
+    invariant packed.len <= i * d
+    invariant forall t in 0..packed.len: 0 <= packed[t] && packed[t] <= 4_000_000_000_000
+  {
+    packed.push(2 * vals[i] * 1024 + cnt[i] / 2)
+    for j in i + 1..d
+      invariant packed.len <= i * d + j
+      invariant forall t in 0..packed.len: 0 <= packed[t] && packed[t] <= 4_000_000_000_000
+    {
+      var m = cnt[i]
+      if cnt[j] < m { m = cnt[j] }
+      if m > 1023 { m = 1023 }
+      packed.push((vals[i] + vals[j]) * 1024 + m)
+    }
+  }
+  let p = sort_asc(packed, 0, 4_000_000_000_000)
+  var best = 0
+  for i in 0..d
+    invariant 0 <= best && best <= 1_000
+  {
+    if cnt[i] > best { best = cnt[i] }
+  }
+  var i = 0
+  while i < p.len
+    invariant 0 <= i && i <= p.len && 0 <= best
+  {
+    let h = p[i] / 1024
+    var total = 0
+    while i < p.len && p[i] / 1024 == h
+      invariant 0 <= i && i <= p.len && 0 <= total && total <= i * 1023
+    {
+      total += p[i] % 1024
+      i += 1
+    }
+    var lo = 0
+    var hi = d
+    while lo < hi
+      invariant 0 <= lo && lo <= hi && hi <= d
+    {
+      let mid = lo + (hi - lo) / 2
+      if vals[mid] < h { lo = mid + 1 } else { hi = mid }
+    }
+    if lo < d && vals[lo] == h { total += cnt[lo] }
+    if total > best { best = total }
+  }
+  best
+}

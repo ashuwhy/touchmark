@@ -1,0 +1,120 @@
+// bottom-up merge sort; only the element range is stated, the order is not needed for safety
+fn sort_asc(a: [int], least: int, most: int) -> [int]
+  requires a.len <= 1_000_000
+  requires forall i in 0..a.len: least <= a[i] && a[i] <= most
+  ensures result.len == a.len
+  ensures forall i in 0..result.len: least <= result[i] && result[i] <= most
+{
+  let n = a.len
+  var src = a
+  var dst = a
+  var width = 1
+  while width < n
+    invariant 1 <= width && width <= 2_000_000
+    invariant src.len == n && dst.len == n
+    invariant forall t in 0..n: least <= src[t] && src[t] <= most
+    invariant forall t in 0..n: least <= dst[t] && dst[t] <= most
+  {
+    var lo = 0
+    while lo < n
+      invariant 0 <= lo && lo <= n && dst.len == n
+      invariant forall t in 0..n: least <= dst[t] && dst[t] <= most
+    {
+      var mid = lo + width
+      if mid > n { mid = n }
+      var hi = lo + 2 * width
+      if hi > n { hi = n }
+      var x = lo
+      var y = mid
+      for k in lo..hi
+        invariant x + y == k + mid && lo <= x && x <= mid && mid <= y && y <= hi
+        invariant forall t in 0..n: least <= dst[t] && dst[t] <= most
+      {
+        if y >= hi || (x < mid && src[x] <= src[y]) {
+          dst[k] = src[x]
+          x += 1
+        } else {
+          dst[k] = src[y]
+          y += 1
+        }
+      }
+      lo = hi
+    }
+    let t = src
+    src = dst
+    dst = t
+    width = width * 2
+  }
+  src
+}
+
+fn gap(x: int, y: int) -> int {
+  if x > y { x - y } else { y - x }
+}
+
+pub fn elevator_penalty(n: int, start: int, requests: [int]) -> int
+  requires 1 <= n && n <= 1_000_000_000 && 0 <= start && start < n
+  requires 1 <= requests.len && requests.len <= 1_500
+  requires forall i in 0..requests.len: 0 <= requests[i] && requests[i] < n
+  requires forall i in 0..requests.len: forall j in 0..requests.len: i != j ==> requests[i] != requests[j]
+{
+  var away: [int] = []
+  for i in 0..requests.len
+    invariant away.len <= i
+    invariant forall t in 0..away.len: 0 <= away[t] && away[t] <= 1_000_000_000
+  {
+    if requests[i] != start { away.push(requests[i]) }
+  }
+  let pts = sort_asc(away, 0, 1_000_000_000)
+  let m = pts.len
+  if m == 0 {
+    return 0
+  }
+  var s = 0
+  for t in 0..m
+    invariant 0 <= s && s <= t
+  {
+    if pts[t] < start { s += 1 }
+  }
+  // f[l] / g[l]: least cost having fulfilled pts[l..l+len], standing at its left / right end;
+  // every second of movement costs one per request still waiting
+  let none = 4_000_000_000_000_000_000
+  var f = [none; m]
+  var g = [none; m]
+  if s > 0 {
+    f[s - 1] = gap(start, pts[s - 1]) * m
+    g[s - 1] = f[s - 1]
+  }
+  if s < m {
+    f[s] = gap(pts[s], start) * m
+    g[s] = f[s]
+  }
+  for len in 2..m + 1
+    invariant f.len == m && g.len == m
+    invariant forall t in 0..m: 0 <= f[t] && f[t] <= 4_000_000_000_000_000_000
+    invariant forall t in 0..m: 0 <= g[t] && g[t] <= 4_000_000_000_000_000_000
+  {
+    let left = m - len + 1
+    var nf = [none; m]
+    var ng = [none; m]
+    for l in 0..m - len + 1
+      invariant forall t in 0..m: 0 <= nf[t] && nf[t] <= 4_000_000_000_000_000_000
+      invariant forall t in 0..m: 0 <= ng[t] && ng[t] <= 4_000_000_000_000_000_000
+    {
+      let r = l + len - 1
+      var grow_left = f[l + 1] + gap(pts[l + 1], pts[l]) * left
+      let turn_left = g[l + 1] + gap(pts[r], pts[l]) * left
+      if turn_left < grow_left { grow_left = turn_left }
+      if grow_left > none { grow_left = none }
+      nf[l] = grow_left
+      var grow_right = g[l] + gap(pts[r], pts[r - 1]) * left
+      let turn_right = f[l] + gap(pts[r], pts[l]) * left
+      if turn_right < grow_right { grow_right = turn_right }
+      if grow_right > none { grow_right = none }
+      ng[l] = grow_right
+    }
+    f = nf
+    g = ng
+  }
+  if g[0] < f[0] { g[0] } else { f[0] }
+}

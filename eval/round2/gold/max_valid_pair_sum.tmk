@@ -1,0 +1,13 @@
+pub fn max_valid_pair_sum(nums: [int], k: int) -> int
+  requires 2 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: 1 <= nums[i] && nums[i] <= 1_000_000_000
+  requires 1 <= k && k <= nums.len - 1
+{
+  var lead = 0
+  var best = 0
+  for j in k..nums.len {
+    if nums[j - k] > lead { lead = nums[j - k] }
+    if lead + nums[j] > best { best = lead + nums[j] }
+  }
+  best
+}

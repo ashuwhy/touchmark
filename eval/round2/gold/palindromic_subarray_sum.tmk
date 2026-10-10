@@ -1,0 +1,71 @@
+// every element is positive, so the widest palindrome around each centre has the largest sum
+pub fn palindromic_subarray_sum(nums: [int]) -> int
+  requires 1 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: 1 <= nums[i] && nums[i] <= 1_000_000_000
+{
+  let n = nums.len
+  var pre = [0; n + 1]
+  for i in 0..n
+    invariant forall t in 0..i + 1: 0 <= pre[t] && pre[t] <= t * 1_000_000_000
+  {
+    pre[i + 1] = pre[i] + nums[i]
+  }
+  var best = 0
+  var d1 = [0; n]
+  var l = 0
+  var r = -1
+  for i in 0..n
+    invariant 0 <= l && l <= i && -1 <= r && r < n
+    invariant forall t in 0..n: 0 <= d1[t] && d1[t] <= n
+  {
+    var k = 1
+    if i <= r {
+      k = d1[l + r - i]
+      if k > r - i + 1 { k = r - i + 1 }
+      if k < 1 { k = 1 }
+    }
+    if k > i + 1 { k = i + 1 }
+    if i + k > n { k = n - i }
+    while i - k >= 0 && i + k < n && nums[i - k] == nums[i + k]
+      invariant 1 <= k && k <= i + 1 && i + k <= n
+    {
+      k += 1
+    }
+    d1[i] = k
+    if i + k - 1 > r {
+      l = i - k + 1
+      r = i + k - 1
+    }
+    let s = pre[i + k] - pre[i - k + 1]
+    if s > best { best = s }
+  }
+  var d2 = [0; n]
+  l = 0
+  r = -1
+  for i in 0..n
+    invariant 0 <= l && l <= i && -1 <= r && r < n && (r < i || l < i)
+    invariant forall t in 0..n: 0 <= d2[t] && d2[t] <= n
+  {
+    var k = 0
+    if i <= r {
+      k = d2[l + r - i + 1]
+      if k > r - i + 1 { k = r - i + 1 }
+    }
+    if k < 0 { k = 0 }
+    if k > i { k = i }
+    if i + k > n { k = n - i }
+    while i - k - 1 >= 0 && i + k < n && nums[i - k - 1] == nums[i + k]
+      invariant 0 <= k && k <= i && i + k <= n
+    {
+      k += 1
+    }
+    d2[i] = k
+    if i + k - 1 > r {
+      l = i - k
+      r = i + k - 1
+    }
+    let s = pre[i + k] - pre[i - k]
+    if s > best { best = s }
+  }
+  best
+}

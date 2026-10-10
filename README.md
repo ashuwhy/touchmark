@@ -131,7 +131,7 @@ versions, and all seven together are within 18% of Rust (`bench/arrays/RESULTS.m
 - **Greppable.** Effects are called by name (`io.print`), variant names are global, there are no
   macros, overloading or implicit conversions.
 
-## Does it help agents? Round 1 says: not yet shown
+## Does it help agents? Not yet shown, after two rounds
 
 I pre-registered a test ([`eval/PROTOCOL.md`](eval/PROTOCOL.md)): 12 small tasks built to provoke
 overflow, off-by-one, negative modulo and empty-array bugs, three trials each, one fresh agent per run
@@ -153,8 +153,21 @@ Since then I fixed those findings. Sortedness can be written over adjacent pairs
 that builds its array with `push` proves it, and a kept check is one pass. Contracts can use
 `sum j in lo..hi: e`, `i128` holds exact sums, and the natural `ring_index` contract
 `result == ((head + offset) % cap + cap) % cap` is proved. The reference shrank from 3,225 to 2,688
-tokens and now tells agents that a proved `ensures` replaces their tests. Whether any of this
-changes the outcome is for round 2 to measure.
+tokens and now tells agents that a proved `ensures` replaces their tests.
+
+Round 2 ([`eval/round2/PROTOCOL.md`](eval/round2/PROTOCOL.md), pre-registered) took the 11 LeetCode
+Hard problems with integer inputs from the contests of July to September 2026, after the model's
+training cutoff, with 223 hidden tests. It began with 11 Rust runs, and a stop rule ended the round
+if 0 or 1 of them shipped a defect. **0 of 11 did**: 223 of 223 tests passed, so no Touchmark run was
+made and the defect question is unanswered a second time. Results in
+[`eval/round2/RESULTS.md`](eval/round2/RESULTS.md).
+
+The ceiling is not about difficulty. Every one of the 11 agents wrote a brute force from the
+specification and compared it with its solution on 3,000 to 400,000 random inputs before answering
+DONE. Harder tasks made that testing longer (T_work 10,308 against round 1's 3,765), not less
+effective. Planted bugs show the hidden tests do catch mistakes: 11 of 12 failed, and the twelfth
+is very likely not a bug. Round 3 should take the agents' test runs away (compiler only, no running
+code), which is where a proof is supposed to replace the tests.
 
 ## Use it
 

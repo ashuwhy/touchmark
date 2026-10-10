@@ -1,0 +1,39 @@
+# python3 difftest.py 7 ../gold/*.rs (golds, validates the tester)
+examples ok 34
+../gold/count_ratio_subarrays.rs 2300/2300
+../gold/distant_subarrays.rs 2300/2300
+../gold/elevator_penalty.rs 2300/2300
+../gold/largest_power.rs 2300/2300
+../gold/longest_negation_subarray.rs 2300/2300
+../gold/max_valid_splits.rs 2300/2300
+../gold/min_max_waiting_time.rs 2300/2300
+../gold/min_ops_subset_sum.rs 2300/2300
+../gold/palindromic_subarray_sum.rs 2300/2300
+../gold/shadow_pairs.rs 2300/2300
+../gold/widest_fence.rs 2300/2300
+# python3 difftest.py 11 ../solutions/r2t1-*/solution.rs
+examples ok 34
+../solutions/r2t1-count_ratio_subarrays-rs/solution.rs 2300/2300
+../solutions/r2t1-distant_subarrays-rs/solution.rs 2300/2300
+../solutions/r2t1-elevator_penalty-rs/solution.rs 2300/2300
+../solutions/r2t1-largest_power-rs/solution.rs 2300/2300
+../solutions/r2t1-longest_negation_subarray-rs/solution.rs 2300/2300
+../solutions/r2t1-max_valid_splits-rs/solution.rs 2300/2300
+../solutions/r2t1-min_max_waiting_time-rs/solution.rs 2300/2300
+../solutions/r2t1-min_ops_subset_sum-rs/solution.rs 2300/2300
+../solutions/r2t1-palindromic_subarray_sum-rs/solution.rs 2300/2300
+../solutions/r2t1-shadow_pairs-rs/solution.rs 2300/2300
+../solutions/r2t1-widest_fence-rs/solution.rs 2300/2300
+# python3 difftest.py 12 ../solutions/r2t1-*/solution.rs
+examples ok 34
+../solutions/r2t1-count_ratio_subarrays-rs/solution.rs 2300/2300
+../solutions/r2t1-distant_subarrays-rs/solution.rs 2300/2300
+../solutions/r2t1-elevator_penalty-rs/solution.rs 2300/2300
+../solutions/r2t1-largest_power-rs/solution.rs 2300/2300
+../solutions/r2t1-longest_negation_subarray-rs/solution.rs 2300/2300
+../solutions/r2t1-max_valid_splits-rs/solution.rs 2300/2300
+../solutions/r2t1-min_max_waiting_time-rs/solution.rs 2300/2300
+../solutions/r2t1-min_ops_subset_sum-rs/solution.rs 2300/2300
+../solutions/r2t1-palindromic_subarray_sum-rs/solution.rs 2300/2300
+../solutions/r2t1-shadow_pairs-rs/solution.rs 2300/2300
+../solutions/r2t1-widest_fence-rs/solution.rs 2300/2300

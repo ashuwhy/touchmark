@@ -1,0 +1,96 @@
+// the state before car i: fuel left in dispenser 0, which dispenser took car i-1 (it is busy
+// for all of demand[i-1], since that car has just started) and how long the other stays busy,
+// packed as (f0 * 2 + last) * 21 + other; each holds the least possible largest wait so far
+pub fn min_max_waiting_time(demand: [int], fuel: [int]) -> int
+  requires 1 <= demand.len && demand.len <= 50
+  requires forall i in 0..demand.len: 1 <= demand[i] && demand[i] <= 20
+  requires fuel.len == 2 && 1 <= fuel[0] && fuel[0] <= 50 && 1 <= fuel[1] && fuel[1] <= 50
+{
+  let none = 1_000_000
+  let n = demand.len
+  var cur = [none; 2142]
+  cur[fuel[0] * 42] = 0
+  var used = 0
+  var best_count = 0
+  var best_wait = 0
+  var alive = true
+  var i = 0
+  while i < n && alive
+    invariant 0 <= i && i <= n && 0 <= used && used <= 20 * i
+    invariant cur.len == 2142
+    invariant forall t in 0..2142: 0 <= cur[t] && cur[t] <= 1_000_000
+    invariant 0 <= best_count && best_count <= n && 0 <= best_wait && best_wait <= 1_000_000
+  {
+    let d = demand[i]
+    var prev = 0
+    if i > 0 { prev = demand[i - 1] }
+    var next = [none; 2142]
+    var any = false
+    for f0 in 0..51
+      invariant forall t in 0..2142: 0 <= next[t] && next[t] <= 1_000_000
+      invariant 0 <= best_count && best_count <= n && 0 <= best_wait && best_wait <= 1_000_000
+    {
+      let f1 = fuel[0] + fuel[1] - used - f0
+      for last in 0..2
+        invariant forall t in 0..2142: 0 <= next[t] && next[t] <= 1_000_000
+        invariant 0 <= best_count && best_count <= n && 0 <= best_wait && best_wait <= 1_000_000
+      {
+        for other in 0..21
+          invariant forall t in 0..2142: 0 <= next[t] && next[t] <= 1_000_000
+          invariant 0 <= best_count && best_count <= n && 0 <= best_wait && best_wait <= 1_000_000
+        {
+          let w = cur[(f0 * 2 + last) * 21 + other]
+          if w < none {
+            var stuck = true
+            for j in 0..2
+              invariant forall t in 0..2142: 0 <= next[t] && next[t] <= 1_000_000
+            {
+              var f = f0
+              if j == 1 { f = f1 }
+              if f >= d {
+                stuck = false
+                any = true
+                var wait = other
+                var rest = prev - other
+                if j == last {
+                  wait = prev
+                  rest = other - prev
+                }
+                if rest < 0 { rest = 0 }
+                var nf0 = f0
+                if j == 0 { nf0 = f0 - d }
+                let k = (nf0 * 2 + j) * 21 + rest
+                var cand = w
+                if wait > cand { cand = wait }
+                if cand < next[k] { next[k] = cand }
+              }
+            }
+            if stuck && (i > best_count || (i == best_count && w < best_wait)) {
+              best_count = i
+              best_wait = w
+            }
+          }
+        }
+      }
+    }
+    if any {
+      used += d
+      cur = next
+      i += 1
+      if i == n {
+        for t in 0..2142
+          invariant 0 <= best_count && best_count <= n && 0 <= best_wait && best_wait <= 1_000_000
+        {
+          let w = cur[t]
+          if w < none && (n > best_count || w < best_wait) {
+            best_count = n
+            best_wait = w
+          }
+        }
+      }
+    } else {
+      alive = false
+    }
+  }
+  if best_count == 0 { -1 } else { best_wait }
+}

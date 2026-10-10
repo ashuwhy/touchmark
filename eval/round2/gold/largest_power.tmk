@@ -1,0 +1,66 @@
+// v & mask over 15 bits.
+fn common_bits(v: int, mask: int) -> int
+  requires 0 <= v && v <= 32_767 && 0 <= mask && mask <= 32_767
+  ensures 0 <= result && result <= 32_767
+{
+  var r = 0
+  var p = 16_384
+  while p > 0
+    invariant 0 <= p && p <= 16_384 && 0 <= r && r + 2 * p <= 32_768 && (p == 0 ==> r <= 32_767)
+  {
+    if (v / p) % 2 == 1 && (mask / p) % 2 == 1 { r += p }
+    p = p / 2
+  }
+  r
+}
+
+// Greedy: while some value has every bit of the mask, all of them go next; otherwise the next
+// value must be the one keeping the largest part of the mask.
+pub fn largest_power(nums: [int]) -> [int]
+  requires 1 <= nums.len && nums.len <= 50_000
+  requires forall i in 0..nums.len: 0 <= nums[i] && nums[i] <= 32_767
+{
+  var left = nums
+  var order: [int] = []
+  var mask = 32_767
+  while left.len > 0
+    invariant 0 <= mask && mask <= 32_767
+    invariant order.len + left.len == nums.len
+    invariant forall t in 0..left.len: 0 <= left[t] && left[t] <= 32_767
+    invariant forall t in 0..order.len: 0 <= order[t] && order[t] <= 32_767
+  {
+    var rest: [int] = []
+    var keep = 0
+    for t in 0..left.len
+      invariant order.len + rest.len + left.len - t == nums.len
+      invariant 0 <= keep && keep <= 32_767
+      invariant forall s in 0..rest.len: 0 <= rest[s] && rest[s] <= 32_767
+      invariant forall s in 0..order.len: 0 <= order[s] && order[s] <= 32_767
+    {
+      let w = common_bits(left[t], mask)
+      if w == mask {
+        order.push(left[t])
+      } else {
+        rest.push(left[t])
+        if w > keep { keep = w }
+      }
+    }
+    if rest.len == left.len { mask = keep }
+    left = rest
+  }
+  var power: [int] = []
+  var p = 16_384
+  while p > 0
+    invariant 0 <= p && power.len + p <= 16_384
+  {
+    var j = 0
+    while j < order.len && (order[j] / p) % 2 == 1
+      invariant 0 <= j && j <= order.len
+    {
+      j += 1
+    }
+    power.push(j)
+    p = p / 2
+  }
+  power
+}

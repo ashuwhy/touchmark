@@ -1,0 +1,559 @@
+[
+ {
+  "id": "p2-max_valid_pair_sum-rs",
+  "task": "max_valid_pair_sum",
+  "lang": "rust",
+  "trial": 0,
+  "dir": "/work/p2-max_valid_pair_sum-rs",
+  "agent": "ac4d1bb8c1d3ebbf1",
+  "started": "2026-10-01T12:06:17"
+ },
+ {
+  "id": "p2-max_valid_pair_sum-tmk",
+  "task": "max_valid_pair_sum",
+  "lang": "touchmark",
+  "trial": 0,
+  "dir": "/work/p2-max_valid_pair_sum-tmk",
+  "agent": "ad0b57e56a0bb3434",
+  "started": "2026-10-01T12:06:17"
+ },
+ {
+  "id": "r2t1-palindromic_subarray_sum-rs",
+  "task": "palindromic_subarray_sum",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-palindromic_subarray_sum-rs",
+  "agent": "a907e31a915e2dc29",
+  "started": "2026-10-10T13:05:14"
+ },
+ {
+  "id": "r2t1-widest_fence-rs",
+  "task": "widest_fence",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-widest_fence-rs",
+  "agent": "ab1d48362e670755f",
+  "started": "2026-10-10T13:05:14"
+ },
+ {
+  "id": "r2t1-min_max_waiting_time-rs",
+  "task": "min_max_waiting_time",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-min_max_waiting_time-rs",
+  "agent": "a11d3ee66fa85db3c",
+  "started": "2026-10-10T13:05:14"
+ },
+ {
+  "id": "r2t1-count_ratio_subarrays-rs",
+  "task": "count_ratio_subarrays",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-count_ratio_subarrays-rs",
+  "agent": "a2832e858651675c8",
+  "started": "2026-10-10T13:05:14"
+ },
+ {
+  "id": "r2t1-elevator_penalty-rs",
+  "task": "elevator_penalty",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-elevator_penalty-rs",
+  "agent": "a180edd3d5677048c",
+  "started": "2026-10-10T13:06:10"
+ },
+ {
+  "id": "r2t1-max_valid_splits-rs",
+  "task": "max_valid_splits",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-max_valid_splits-rs",
+  "agent": "a47cf2c59978f3ea0",
+  "started": "2026-10-10T13:06:10"
+ },
+ {
+  "id": "r2t1-min_ops_subset_sum-rs",
+  "task": "min_ops_subset_sum",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-min_ops_subset_sum-rs",
+  "agent": "af2f0cae13bbff2a5",
+  "started": "2026-10-10T13:06:10"
+ },
+ {
+  "id": "r2t1-distant_subarrays-rs",
+  "task": "distant_subarrays",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-distant_subarrays-rs",
+  "agent": "a3c92322f4b7f5b4a",
+  "started": "2026-10-10T13:07:20"
+ },
+ {
+  "id": "r2t1-shadow_pairs-rs",
+  "task": "shadow_pairs",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-shadow_pairs-rs",
+  "agent": "a2180ba0d43d25760",
+  "started": "2026-10-10T13:07:58"
+ },
+ {
+  "id": "r2t1-largest_power-rs",
+  "task": "largest_power",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-largest_power-rs",
+  "agent": "a75c73747251c4c33",
+  "started": "2026-10-10T13:08:20"
+ },
+ {
+  "id": "r2t1-longest_negation_subarray-rs",
+  "task": "longest_negation_subarray",
+  "lang": "rust",
+  "trial": 1,
+  "dir": "/work/r2t1-longest_negation_subarray-rs",
+  "agent": "a6fce8eb29b1138fa",
+  "started": "2026-10-10T13:08:41"
+ },
+ {
+  "id": "r2t1-palindromic_subarray_sum-tmk",
+  "task": "palindromic_subarray_sum",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-palindromic_subarray_sum-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-widest_fence-tmk",
+  "task": "widest_fence",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-widest_fence-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-min_max_waiting_time-tmk",
+  "task": "min_max_waiting_time",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-min_max_waiting_time-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-count_ratio_subarrays-tmk",
+  "task": "count_ratio_subarrays",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-count_ratio_subarrays-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-elevator_penalty-tmk",
+  "task": "elevator_penalty",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-elevator_penalty-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-max_valid_splits-tmk",
+  "task": "max_valid_splits",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-max_valid_splits-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-min_ops_subset_sum-tmk",
+  "task": "min_ops_subset_sum",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-min_ops_subset_sum-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-distant_subarrays-tmk",
+  "task": "distant_subarrays",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-distant_subarrays-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-shadow_pairs-tmk",
+  "task": "shadow_pairs",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-shadow_pairs-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-largest_power-tmk",
+  "task": "largest_power",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-largest_power-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t1-longest_negation_subarray-tmk",
+  "task": "longest_negation_subarray",
+  "lang": "touchmark",
+  "trial": 1,
+  "dir": "/work/r2t1-longest_negation_subarray-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-palindromic_subarray_sum-tmk",
+  "task": "palindromic_subarray_sum",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-palindromic_subarray_sum-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-palindromic_subarray_sum-rs",
+  "task": "palindromic_subarray_sum",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-palindromic_subarray_sum-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-widest_fence-rs",
+  "task": "widest_fence",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-widest_fence-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-widest_fence-tmk",
+  "task": "widest_fence",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-widest_fence-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-min_max_waiting_time-tmk",
+  "task": "min_max_waiting_time",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-min_max_waiting_time-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-min_max_waiting_time-rs",
+  "task": "min_max_waiting_time",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-min_max_waiting_time-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-count_ratio_subarrays-rs",
+  "task": "count_ratio_subarrays",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-count_ratio_subarrays-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-count_ratio_subarrays-tmk",
+  "task": "count_ratio_subarrays",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-count_ratio_subarrays-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-elevator_penalty-tmk",
+  "task": "elevator_penalty",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-elevator_penalty-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-elevator_penalty-rs",
+  "task": "elevator_penalty",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-elevator_penalty-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-max_valid_splits-rs",
+  "task": "max_valid_splits",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-max_valid_splits-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-max_valid_splits-tmk",
+  "task": "max_valid_splits",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-max_valid_splits-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-min_ops_subset_sum-tmk",
+  "task": "min_ops_subset_sum",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-min_ops_subset_sum-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-min_ops_subset_sum-rs",
+  "task": "min_ops_subset_sum",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-min_ops_subset_sum-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-distant_subarrays-rs",
+  "task": "distant_subarrays",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-distant_subarrays-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-distant_subarrays-tmk",
+  "task": "distant_subarrays",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-distant_subarrays-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-shadow_pairs-tmk",
+  "task": "shadow_pairs",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-shadow_pairs-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-shadow_pairs-rs",
+  "task": "shadow_pairs",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-shadow_pairs-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-largest_power-rs",
+  "task": "largest_power",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-largest_power-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t2-largest_power-tmk",
+  "task": "largest_power",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-largest_power-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-longest_negation_subarray-tmk",
+  "task": "longest_negation_subarray",
+  "lang": "touchmark",
+  "trial": 2,
+  "dir": "/work/r2t2-longest_negation_subarray-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t2-longest_negation_subarray-rs",
+  "task": "longest_negation_subarray",
+  "lang": "rust",
+  "trial": 2,
+  "dir": "/work/r2t2-longest_negation_subarray-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-palindromic_subarray_sum-rs",
+  "task": "palindromic_subarray_sum",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-palindromic_subarray_sum-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-palindromic_subarray_sum-tmk",
+  "task": "palindromic_subarray_sum",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-palindromic_subarray_sum-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-widest_fence-tmk",
+  "task": "widest_fence",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-widest_fence-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-widest_fence-rs",
+  "task": "widest_fence",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-widest_fence-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-min_max_waiting_time-rs",
+  "task": "min_max_waiting_time",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-min_max_waiting_time-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-min_max_waiting_time-tmk",
+  "task": "min_max_waiting_time",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-min_max_waiting_time-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-count_ratio_subarrays-tmk",
+  "task": "count_ratio_subarrays",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-count_ratio_subarrays-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-count_ratio_subarrays-rs",
+  "task": "count_ratio_subarrays",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-count_ratio_subarrays-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-elevator_penalty-rs",
+  "task": "elevator_penalty",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-elevator_penalty-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-elevator_penalty-tmk",
+  "task": "elevator_penalty",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-elevator_penalty-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-max_valid_splits-tmk",
+  "task": "max_valid_splits",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-max_valid_splits-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-max_valid_splits-rs",
+  "task": "max_valid_splits",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-max_valid_splits-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-min_ops_subset_sum-rs",
+  "task": "min_ops_subset_sum",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-min_ops_subset_sum-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-min_ops_subset_sum-tmk",
+  "task": "min_ops_subset_sum",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-min_ops_subset_sum-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-distant_subarrays-tmk",
+  "task": "distant_subarrays",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-distant_subarrays-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-distant_subarrays-rs",
+  "task": "distant_subarrays",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-distant_subarrays-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-shadow_pairs-rs",
+  "task": "shadow_pairs",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-shadow_pairs-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-shadow_pairs-tmk",
+  "task": "shadow_pairs",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-shadow_pairs-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-largest_power-tmk",
+  "task": "largest_power",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-largest_power-tmk",
+  "agent": null
+ },
+ {
+  "id": "r2t3-largest_power-rs",
+  "task": "largest_power",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-largest_power-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-longest_negation_subarray-rs",
+  "task": "longest_negation_subarray",
+  "lang": "rust",
+  "trial": 3,
+  "dir": "/work/r2t3-longest_negation_subarray-rs",
+  "agent": null
+ },
+ {
+  "id": "r2t3-longest_negation_subarray-tmk",
+  "task": "longest_negation_subarray",
+  "lang": "touchmark",
+  "trial": 3,
+  "dir": "/work/r2t3-longest_negation_subarray-tmk",
+  "agent": null
+ }
+]

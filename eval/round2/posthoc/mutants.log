@@ -1,0 +1,17 @@
+palindromic_subarray_sum   20/21 {'timeout': 1}  quadratic expansion instead of Manacher
+widest_fence               18/21 {'wrong': 3}  forgets pairs of two equal heights
+min_max_waiting_time       20/22 {'wrong': 2}  returns 0 instead of -1 when no car is served
+count_ratio_subarrays      11/19 {'wrong': 8}  strict comparison: misses x / y == a / b
+elevator_penalty           20/20 all pass  a request on the start floor is not free
+max_valid_splits           19/20 {'wrong': 1}  never deletes the first or last element
+min_ops_subset_sum         13/20 {'wrong': 7}  never halves an element down to 1
+distant_subarrays          17/20 {'wrong': 3}  drops the k == 0 case (equal sums counted twice)
+distant_subarrays          19/20 {'wrong': 1}  subarray count kept in 32 bits
+shadow_pairs               12/20 {'wrong': 8}  equal values never pair
+largest_power              14/19 {'wrong': 5}  bit mask one bit short
+longest_negation_subarray  11/21 {'crash': 10}  % instead of rem_euclid on negative prefix sums
+# the surviving elevator mutant against the brute force
+examples ok 34
+mut/elevator_penalty.rs 2300/2300
+examples ok 34
+mut/elevator_penalty.rs 2300/2300

@@ -1,0 +1,32 @@
+pub fn max_valid_pair_sum(nums: [int], k: int) -> int
+  requires 2 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: 1 <= nums[i] && nums[i] <= 1_000_000_000
+  requires 1 <= k && k <= nums.len - 1
+  ensures exists i in 0..nums.len: exists j in 0..nums.len: i + k <= j && result == nums[i] + nums[j]
+  ensures forall i in 0..nums.len: forall j in 0..nums.len: i + k <= j ==> nums[i] + nums[j] <= result
+{
+  // left is the index of the largest nums[0..j-k] once updated; bi, bj are the best pair so far
+  var left = 0
+  var bi = 0
+  var bj = k
+  var best = nums[0] + nums[k]
+  var j = k
+  while j < nums.len
+    invariant k <= j && j <= nums.len
+    invariant 0 <= left && left <= j - k
+    invariant forall t in 0..j - k: nums[t] <= nums[left]
+    invariant 0 <= bi && bi + k <= bj && bj < nums.len
+    invariant best == nums[bi] + nums[bj]
+    invariant forall i in 0..nums.len: forall q in 0..j: i + k <= q ==> nums[i] + nums[q] <= best
+    decreases nums.len - j
+  {
+    if nums[j - k] > nums[left] { left = j - k }
+    if nums[left] + nums[j] > best {
+      best = nums[left] + nums[j]
+      bi = left
+      bj = j
+    }
+    j += 1
+  }
+  best
+}

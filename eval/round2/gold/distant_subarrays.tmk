@@ -1,0 +1,83 @@
+// |p[j] - p[i] - goal| >= k: count the pairs i < j of prefix sums with p[i] <= p[j] - goal - k
+// or p[i] >= p[j] - goal + k (the two never overlap when k > 0), by merge sort
+pub fn distant_subarrays(nums: [int], goal: int, k: int) -> int
+  requires 1 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: -1_000_000_000 <= nums[i] && nums[i] <= 1_000_000_000
+  requires -1_000_000_000 <= goal && goal <= 1_000_000_000 && 0 <= k && k <= 1_000_000_000
+{
+  if k == 0 {
+    return nums.len * (nums.len + 1) / 2
+  }
+  var p = [0]
+  for i in 0..nums.len
+    invariant p.len == i + 1
+    invariant forall t in 0..p.len: -1_000_000_000 * t <= p[t] && p[t] <= 1_000_000_000 * t
+  {
+    p.push(p[i] + nums[i])
+  }
+  let n = p.len
+  var src = p
+  var dst = p
+  var count = 0
+  var width = 1
+  // 2^17 > 100_001, so 17 levels sort any input; the level count bounds `count`
+  for lev in 0..17
+    invariant 1 <= width && width <= 200_002
+    invariant src.len == n && dst.len == n
+    invariant forall t in 0..n: -100_000_000_000_000 <= src[t] && src[t] <= 100_000_000_000_000
+    invariant forall t in 0..n: -100_000_000_000_000 <= dst[t] && dst[t] <= 100_000_000_000_000
+    invariant 0 <= count && count <= 20_000_400_002 * lev
+  {
+    if width < n {
+      var lo = 0
+      while lo < n
+        invariant 0 <= lo && lo <= n && dst.len == n
+        invariant forall t in 0..n: -100_000_000_000_000 <= dst[t] && dst[t] <= 100_000_000_000_000
+        invariant 0 <= count && count <= 20_000_400_002 * lev + 200_002 * lo
+      {
+        var mid = lo + width
+        if mid > n { mid = n }
+        var hi = lo + 2 * width
+        if hi > n { hi = n }
+        var below = lo
+        var above = lo
+        for j in mid..hi
+          invariant lo <= below && below <= mid && lo <= above && above <= mid
+          invariant 0 <= count && count <= 20_000_400_002 * lev + 200_002 * j
+        {
+          while below < mid && src[below] <= src[j] - goal - k
+            invariant lo <= below && below <= mid
+          {
+            below += 1
+          }
+          while above < mid && src[above] < src[j] - goal + k
+            invariant lo <= above && above <= mid
+          {
+            above += 1
+          }
+          count += below - lo + mid - above
+        }
+        var x = lo
+        var y = mid
+        for t in lo..hi
+          invariant x + y == t + mid && lo <= x && x <= mid && mid <= y && y <= hi
+          invariant forall s in 0..n: -100_000_000_000_000 <= dst[s] && dst[s] <= 100_000_000_000_000
+        {
+          if y >= hi || (x < mid && src[x] <= src[y]) {
+            dst[t] = src[x]
+            x += 1
+          } else {
+            dst[t] = src[y]
+            y += 1
+          }
+        }
+        lo = hi
+      }
+      let t = src
+      src = dst
+      dst = t
+      width = width * 2
+    }
+  }
+  count
+}

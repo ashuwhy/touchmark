@@ -1,0 +1,155 @@
+fn gcd(a: int, b: int) -> int
+  requires 0 <= a && a <= 1_000_000_000 && 0 <= b && b <= 1_000_000_000
+  ensures 0 <= result && result <= 1_000_000_000
+{
+  var x = a
+  var y = b
+  while y != 0
+    invariant 0 <= x && x <= 1_000_000_000 && 0 <= y && y <= 1_000_000_000
+  {
+    let t = x % y
+    x = y
+    y = t
+  }
+  x
+}
+
+// A split of an array with gcd g is valid exactly when both sides have gcd g, so an array has
+// (last index whose suffix gcd is g) - (first index whose prefix gcd is g) of them, if positive.
+// Deleting nums[k] leaves an array with gcd G = gcd(pg[k], sg[k + 1]); its first such prefix
+// index lp[k] and last such suffix index rp[k] come from the prefix and suffix gcds when they
+// reach G before (after) k, and otherwise from the distinct gcds of the ranges starting at k + 1
+// (ending at k - 1), kept with the first end (last start) of each: at most 31 of them, since
+// each divides the one before.
+pub fn max_valid_splits(nums: [int]) -> int
+  requires 2 <= nums.len && nums.len <= 100_000
+  requires forall i in 0..nums.len: 1 <= nums[i] && nums[i] <= 1_000_000_000
+{
+  let n = nums.len
+  var pg = [0; n + 1]
+  for i in 0..n {
+    pg[i + 1] = gcd(pg[i], nums[i])
+  }
+  var sg = [0; n + 1]
+  var i = n
+  while i > 0
+    invariant 0 <= i && i <= n
+  {
+    i -= 1
+    sg[i] = gcd(sg[i + 1], nums[i])
+  }
+  let g = pg[n]
+  var first = 0
+  while first < n - 1 && pg[first + 1] != g
+    invariant 0 <= first && first <= n - 1
+  {
+    first += 1
+  }
+  var last = n - 1
+  while last > 0 && sg[last] != g
+    invariant 0 <= last && last <= n - 1
+  {
+    last -= 1
+  }
+  var best = 0
+  if last > first { best = last - first }
+  if n < 3 {
+    return best
+  }
+
+  var lp = [0; n]
+  var vals: [int] = []
+  var ends: [int] = []
+  var k = n
+  while k > 0
+    invariant 0 <= k && k <= n && lp.len == n && vals.len == ends.len && vals.len <= n - k
+    invariant forall t in 0..n: -1 <= lp[t] && lp[t] <= n
+    invariant forall t in 0..ends.len: 0 <= ends[t] && ends[t] < n
+    invariant forall t in 0..vals.len: 0 <= vals[t] && vals[t] <= 1_000_000_000
+  {
+    k -= 1
+    let big = gcd(pg[k], sg[k + 1])
+    var lo = 0
+    var hi = n
+    while lo < hi
+      invariant 0 <= lo && lo <= hi && hi <= n
+    {
+      let mid = lo + (hi - lo) / 2
+      if pg[mid + 1] <= big { hi = mid } else { lo = mid + 1 }
+    }
+    if lo < k && pg[lo + 1] == big {
+      lp[k] = lo
+    } else {
+      var t = 0
+      while t < vals.len && gcd(pg[k], vals[t]) != big
+        invariant 0 <= t && t <= vals.len
+      {
+        t += 1
+      }
+      if t < vals.len { lp[k] = ends[t] - 1 } else { lp[k] = n }
+    }
+    var nv = [nums[k]]
+    var ne = [k]
+    for t in 0..vals.len
+      invariant nv.len == ne.len && 1 <= nv.len && nv.len <= t + 1
+      invariant forall s in 0..ne.len: 0 <= ne[s] && ne[s] < n
+      invariant forall s in 0..nv.len: 0 <= nv[s] && nv[s] <= 1_000_000_000
+    {
+      let w = gcd(nums[k], vals[t])
+      if w != nv[nv.len - 1] {
+        nv.push(w)
+        ne.push(ends[t])
+      }
+    }
+    vals = nv
+    ends = ne
+  }
+
+  var starts: [int] = []
+  vals = []
+  for k in 0..n
+    invariant vals.len == starts.len && vals.len <= k
+    invariant forall t in 0..starts.len: 0 <= starts[t] && starts[t] < n
+    invariant forall t in 0..vals.len: 0 <= vals[t] && vals[t] <= 1_000_000_000
+    invariant 0 <= best && best <= n
+  {
+    let big = gcd(pg[k], sg[k + 1])
+    var lo = 0
+    var hi = n
+    while lo < hi
+      invariant 0 <= lo && lo <= hi && hi <= n
+    {
+      let mid = lo + (hi - lo) / 2
+      if sg[mid] > big { hi = mid } else { lo = mid + 1 }
+    }
+    var rp = -1
+    if lo >= 2 && lo - 1 > k && sg[lo - 1] == big {
+      rp = lo - 2
+    } else {
+      var t = 0
+      while t < vals.len && gcd(vals[t], sg[k + 1]) != big
+        invariant 0 <= t && t <= vals.len
+      {
+        t += 1
+      }
+      if t < vals.len { rp = starts[t] }
+    }
+    if rp - lp[k] > best { best = rp - lp[k] }
+    var nv = [nums[k]]
+    var ns = [k]
+    for t in 0..vals.len
+      invariant nv.len == ns.len && 1 <= nv.len && nv.len <= t + 1
+      invariant forall s in 0..ns.len: 0 <= ns[s] && ns[s] < n
+      invariant forall s in 0..nv.len: 0 <= nv[s] && nv[s] <= 1_000_000_000
+    {
+      let w = gcd(nums[k], vals[t])
+      if w != nv[nv.len - 1] {
+        nv.push(w)
+        ns.push(starts[t])
+      }
+    }
+    vals = nv
+    starts = ns
+  }
+  best
+}

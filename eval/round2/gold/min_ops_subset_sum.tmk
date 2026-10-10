@@ -1,0 +1,56 @@
+// An element x can become (x / 2^k) * 2^m at cost k + m, and no other value is cheaper, so each
+// element offers at most about 60 (value, cost) options to a 0/1 knapsack over sums up to target.
+pub fn min_ops_subset_sum(nums: [int], target: int) -> int
+  requires 1 <= nums.len && nums.len <= 100
+  requires forall i in 0..nums.len: 1 <= nums[i] && nums[i] <= 500
+  requires 1 <= target && target <= 5_000
+{
+  let none = 1_000_000
+  var dp = [none; target + 1]
+  dp[0] = 0
+  for i in 0..nums.len
+    invariant dp.len == target + 1
+    invariant forall s in 0..dp.len: 0 <= dp[s] && dp[s] <= none
+  {
+    var cost = [none; target + 1]
+    var base = nums[i]
+    var k = 0
+    while base > 0
+      invariant 0 <= base && 0 <= k && k + base <= nums[i]
+      invariant cost.len == target + 1
+      invariant forall s in 0..cost.len: 0 <= cost[s] && cost[s] <= none
+    {
+      var y = base
+      var m = 0
+      while y <= target
+        invariant 1 <= y && y <= 10_000 && 0 <= m && m <= y
+        invariant cost.len == target + 1
+        invariant forall s in 0..cost.len: 0 <= cost[s] && cost[s] <= none
+      {
+        if k + m < cost[y] { cost[y] = k + m }
+        y *= 2
+        m += 1
+      }
+      base = base / 2
+      k += 1
+    }
+    var next = dp
+    for y in 1..target + 1
+      invariant next.len == target + 1
+      invariant forall s in 0..next.len: 0 <= next[s] && next[s] <= none
+    {
+      let c = cost[y]
+      if c < none {
+        for s in y..target + 1
+          invariant next.len == target + 1
+          invariant forall t in 0..next.len: 0 <= next[t] && next[t] <= none
+        {
+          let v = dp[s - y] + c
+          if v < next[s] { next[s] = v }
+        }
+      }
+    }
+    dp = next
+  }
+  if dp[target] >= none { -1 } else { dp[target] }
+}

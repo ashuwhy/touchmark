@@ -254,4 +254,21 @@ Whatever the result, it goes into `eval/round2/RESULTS.md` and the README in the
 
 ## Changes after pre-registration
 
-None yet.
+- **2026-10-10, the machine restarted between the pilot and the calibration.** That cleared
+  `/tmp`, which held the generated prompts and my ledger of agent IDs. I regenerated the prompts
+  with `prompt()` from the unchanged `harness.py` and checked each against the first message of
+  its agent's transcript: 13 of 13 byte-identical (the two pilot runs before launch, the eleven
+  calibration runs after). The ledger came back from `runs.json`. Every hash above was checked
+  again before the calibration started, and all match.
+- **2026-10-10, the gold hash is described wrongly above.** It is not the hash of sorted per-file
+  sums but `cd gold && shasum -a 256 *.rs *.tmk | shasum -a 256`, in glob order (every `.rs`
+  file, then every `.tmk`). That command gives `b325aaa2...` for the committed `gold/`.
+- **2026-10-10, the stop rule fired**: 0 of the 11 calibration runs was defective. No Touchmark
+  run was made. `report.py`, which is not hashed above, returned nothing for a round without a
+  Touchmark arm, so I gave it a calibration path. A new `annotate.py` copies wall time, solution
+  size and the token breakdown from the transcripts into `results.json`, so the numbers can be
+  regenerated without the transcripts. The fields `score_all.py` wrote are unchanged.
+- **2026-10-10, two checks added after the stop**, not pre-registered and not part of any
+  decision: planted bugs in the Rust golds, to show the hidden tests can fail a solution, and the
+  calibration solutions run on fresh random inputs against the brute forces and references
+  (`posthoc/`).
