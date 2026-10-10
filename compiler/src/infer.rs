@@ -66,7 +66,7 @@ pub fn constants(m: &Module, f: &Func) -> Vec<i128> {
     fn walk(e: &TExpr, out: &mut Vec<i128>) {
         match &e.kind {
             TExprKind::Int(v) => {
-                if v.abs() < (1i128 << 62) {
+                if v.unsigned_abs() < (1u128 << 62) {
                     out.push(v.abs());
                 }
             }
