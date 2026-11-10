@@ -9,7 +9,7 @@ copyright = "© 2026 Ashutosh Sharma"
 
 [dependencies]
 clap = { version = "3.0", features = ["derive"] }
-pyo3 = { version = "0.18", optional = true }
+pyo3 = { version = "0.24.1", optional = true }
 libc = "0.2"
 libloading = "0.7"
 crossbeam = "0.8"
@@ -51,7 +51,7 @@ members = [
 ]
 
 [workspace.dependencies]
-pyo3 = { version = "0.18", features = ["extension-module"] }
+pyo3 = { version = "0.24.1", features = ["extension-module"] }
 rayon = "1.5"
 ndarray = "0.15"
 num = "0.4"
